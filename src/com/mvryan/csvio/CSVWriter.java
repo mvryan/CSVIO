@@ -11,6 +11,7 @@ import java.util.*;
 public class CSVWriter implements Closeable, Flushable {
 
 	private Writer writer;
+	private char delimiter = ',';
 	
 	/**
 	 * 
@@ -27,6 +28,27 @@ public class CSVWriter implements Closeable, Flushable {
 	 */
 	public CSVWriter(OutputStream outputStream){
 		writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+	}
+	
+	/**
+	 * 
+	 * @param delimiter
+	 * @return
+	 */
+	public boolean setDelimiter(char delimiter){
+		if(delimiter == '"' || delimiter == '\n'){
+			return false;
+		}
+		this.delimiter = delimiter;
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public char getDelimiter(){
+		return delimiter;
 	}
 	
 	/**
@@ -58,15 +80,15 @@ public class CSVWriter implements Closeable, Flushable {
 				if (c == '"') {
 					quoteFlag = true;
 					elementBuilder.append("\"\"");
-				} else if (c == ',') {
+				} else if (c == delimiter) {
 					quoteFlag = true;
-					elementBuilder.append(',');
+					elementBuilder.append(delimiter);
 				} else {
 					elementBuilder.append(c);
 				}
 			}
 			if(!first){
-				rowBuilder.append(',');
+				rowBuilder.append(delimiter);
 			}
 			if(quoteFlag){
 				rowBuilder.append('"');

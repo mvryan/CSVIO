@@ -12,6 +12,7 @@ public class CSVReader implements Closeable {
 
 	private BufferedReader reader;
 	private InputStream inputStream;
+	private char delimiter = ',';
 	
 	/**
 	 * 
@@ -29,6 +30,27 @@ public class CSVReader implements Closeable {
 	public CSVReader(InputStream inputStream){
 		this.inputStream = inputStream;
 		reader = new BufferedReader(new InputStreamReader(inputStream));
+	}
+	
+	/**
+	 * 
+	 * @param delimiter
+	 * @return
+	 */
+	public boolean setDelimiter(char delimiter){
+		if(delimiter == '"' || delimiter == '\n'){
+			return false;
+		}
+		this.delimiter = delimiter;
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public char getDelimiter(){
+		return delimiter;
 	}
 	
 	/**
@@ -61,7 +83,7 @@ public class CSVReader implements Closeable {
 		for (char c : line.toCharArray()) {
 			switch (state) {
 			case 1:
-				if (c == ',') {
+				if (c == delimiter) {
 					result.add(stringBuilder.toString());
 					stringBuilder = new StringBuilder();
 				} else if (c == '"') {
@@ -78,7 +100,7 @@ public class CSVReader implements Closeable {
 				}
 				break;
 			case 3:
-				if (c == ',') {
+				if (c == delimiter) {
 					result.add(stringBuilder.toString());
 					stringBuilder = new StringBuilder();
 					state = 1;
