@@ -1,5 +1,10 @@
 CSVIO 
 Comma Separated Variable Input Output
+This package attempts to follow http://tools.ietf.org/html/rfc4180
+Currently the only parts of the std not followed are 
+capturing new lines inside of quotes for both the reader and writer, 
+and requiring all rows to possess the same number of entries.
 Copyright 2011 Michael Ryan
-This software is released under the GPLv3 a copy should be included with this software if it was not it can be found at 
+This software is released under the GPLv3 
+A copy of the GPLv3 should be included with this software if it was not it can be found at 
 http://www.gnu.org/licenses/gpl.html
