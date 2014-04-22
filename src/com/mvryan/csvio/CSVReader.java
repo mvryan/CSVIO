@@ -69,6 +69,9 @@ public class CSVReader implements Closeable {
 	
 	/**
 	 * 
+	 * Return a single row from the loaded table.
+	 * Returns null at EOF.
+	 * 
 	 * @return
 	 * @throws IOException
 	 */
